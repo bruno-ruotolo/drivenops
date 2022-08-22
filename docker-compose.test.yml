@@ -1,0 +1,19 @@
+services:
+  db_postgres_drivenops:
+    container_name: db_postgres_drivenops
+    image: postgres
+    restart: always
+    ports:
+      - 5544:5432
+    env_file:
+      - back-end/.env.test
+
+  node_drivenops:
+    container_name: node_drivenops
+    build: ./back-end
+    ports:
+      - 5000:5000
+    depends_on:
+      - db_postgres_drivenops
+    env_file:
+      - back-end/.env.test
